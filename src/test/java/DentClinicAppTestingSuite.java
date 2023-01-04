@@ -1,5 +1,4 @@
 import com.dent.config.WebDriverConfig;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
@@ -29,11 +28,6 @@ public class DentClinicAppTestingSuite {
 
         Thread.sleep(4000);
 
-        WebElement shadowHost = driver.findElement(By.xpath("/html/body/vaadin-dev-tools"));
-        SearchContext shadowRoot = shadowHost.getShadowRoot();
-        WebElement shadowContent = shadowRoot.findElement(By.xpath("/html/body/vaadin-dev-tools//div[2]/div/div[2]"));
-        //nie umie zlokalizować
-
         WebElement nameField = driver.findElement(By.id("input-vaadin-text-field-27"));
         nameField.sendKeys("IntegrationTestName");
 
@@ -48,7 +42,8 @@ public class DentClinicAppTestingSuite {
 
         WebElement datePicker = driver.findElement(By.id("input-vaadin-date-time-picker-date-picker-31"));
         datePicker.click();
-        datePicker.sendKeys(DateTimeFormatter.ofPattern("dd/MM/uuuu").format(LocalDate.now().plusDays(1)));
+        Thread.sleep(1000);
+        datePicker.sendKeys(DateTimeFormatter.ofPattern("dd.MM.uuuu").format(LocalDate.now().plusDays(1)));
         datePicker.sendKeys(Keys.ENTER);
 
         WebElement timePicker = driver.findElement(By.id("input-vaadin-date-time-picker-time-picker-33"));
@@ -67,13 +62,13 @@ public class DentClinicAppTestingSuite {
         Thread.sleep(1000);
         serviceCombobox.sendKeys(Keys.DOWN);
         serviceCombobox.sendKeys(Keys.ENTER);
+
+        WebElement bookButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-horizontal-layout/vaadin-form-layout/vaadin-horizontal-layout/vaadin-button[1]"));
+        bookButton.click();
     }
 
     private void logIn(String identity) {
-        WebElement employeeButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[2]"));
-        employeeButton.click();
-
-        WebElement usernameField = driver.findElement(By.id("input-vaadin-text-field-6"));
+        WebElement usernameField = driver.findElement(By.name("//*[@id=\"input-vaadin-text-field-52\"]"));
         WebElement passwordField = driver.findElement(By.id("input-vaadin-password-field-7"));
 
         if(identity == "Admin") {
@@ -89,8 +84,13 @@ public class DentClinicAppTestingSuite {
     }
 
     @Test
-    void test() throws InterruptedException {
-//        createAnAppointment();
+    void createAppointmentAsPatient() throws InterruptedException {
+        createAnAppointment();
+        Thread.sleep(10000);
+
+        WebElement patientButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[3]"));
+        patientButton.click();
+
         logIn(ADMIN);
     }
 }
