@@ -9,10 +9,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 public class DentClinicAppTestingSuite {
-    private static final String BASE_URL = "http://localhost:8085/home";
+    private static final String BASE_URL = "http://localhost:8080/home";
     private static final String ADMIN = "Admin";
     private static final String USER = "User";
     private WebDriver driver;
+    private WebElement patientButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[3]"));
+    private WebElement adminButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[1]"));
 
     @BeforeEach
     public void initTests() {
@@ -23,7 +25,6 @@ public class DentClinicAppTestingSuite {
     }
 
     private void createAnAppointment() throws InterruptedException {
-        WebElement patientButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[1]"));
         patientButton.click();
 
         Thread.sleep(4000);
@@ -68,12 +69,12 @@ public class DentClinicAppTestingSuite {
     }
 
     private void logIn(String identity) {
-        WebElement usernameField = driver.findElement(By.name("//*[@id=\"input-vaadin-text-field-52\"]"));
+        WebElement usernameField = driver.findElement(By.id("input-vaadin-text-field-6"));
         WebElement passwordField = driver.findElement(By.id("input-vaadin-password-field-7"));
 
-        if(identity == "Admin") {
+        if(identity.equals("Admin")) {
             usernameField.sendKeys("admin");
-        } else if(identity == "User") {
+        } else if(identity.equals("User")) {
             usernameField.sendKeys("user");
         }
 
@@ -88,8 +89,7 @@ public class DentClinicAppTestingSuite {
         createAnAppointment();
         Thread.sleep(10000);
 
-        WebElement patientButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[3]"));
-        patientButton.click();
+        adminButton.click();
 
         logIn(ADMIN);
     }
