@@ -9,22 +9,23 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 public class DentClinicAppTestingSuite {
-    private static final String BASE_URL = "http://localhost:8080/home";
+//    private static final String BASE_URL = "http://localhost:8080/home";
+    private static final String BASE_URL = "http://localhost:8085/home";
     private static final String ADMIN = "Admin";
     private static final String USER = "User";
     private WebDriver driver;
-    private WebElement patientButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[3]"));
-    private WebElement adminButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[1]"));
+
+//    private WebElement adminButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[1]"));
 
     @BeforeEach
     public void initTests() {
         driver = WebDriverConfig.getDriver(WebDriverConfig.CHROME);
-        assert driver != null;
         driver.get(BASE_URL);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     private void createAnAppointment() throws InterruptedException {
+        WebElement patientButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[1]"));
         patientButton.click();
 
         Thread.sleep(4000);
@@ -89,8 +90,9 @@ public class DentClinicAppTestingSuite {
         createAnAppointment();
         Thread.sleep(10000);
 
-        adminButton.click();
+        WebElement dentistButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[2]"));
+        dentistButton.click();
 
-        logIn(ADMIN);
+        logIn(USER);
     }
 }
