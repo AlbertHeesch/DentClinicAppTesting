@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">34.033s</div>
+<div class="counter">31.078s</div>
 <p>duration</p>
 </div>
 </td>
@@ -76,32 +76,14 @@
 <a name="createAppointmentAsPatient()"></a>
 <h3 class="failures">createAppointmentAsPatient()</h3>
 <span class="code">
-<pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;#input\-vaadin\-text\-field\-6&quot;}
-  (Session info: chrome=109.0.5414.75)
-For documentation on this error, please visit: https://selenium.dev/exceptions/#no_such_element
-Build info: version: '4.4.0', revision: 'e5c75ed026a'
-System info: host: 'LAPTOP-0R2G994N', ip: '192.168.0.18', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '11.0.13'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Command: [490886bdd343f596f68c361c3f4b706a, findElement {using=id, value=input-vaadin-text-field-6}]
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 109.0.5414.75, chrome: {chromedriverVersion: 108.0.5359.22 (ec46c90f5938..., userDataDir: C:\Users\ahees\AppData\Loca...}, goog:chromeOptions: {debuggerAddress: localhost:62007}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: WINDOWS, proxy: Proxy(), se:cdp: ws://localhost:62007/devtoo..., se:cdpVersion: 109.0.5414.75, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: 490886bdd343f596f68c361c3f4b706a
-	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
-	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:200)
-	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:133)
-	at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:53)
-	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:184)
-	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:167)
-	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:142)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:547)
-	at org.openqa.selenium.remote.ElementLocation$ElementFinder$2.findElement(ElementLocation.java:162)
-	at org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:60)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:365)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:357)
-	at DentClinicAppTestingSuite.logIn(DentClinicAppTestingSuite.java:73)
-	at DentClinicAppTestingSuite.createAppointmentAsPatient(DentClinicAppTestingSuite.java:96)
+<pre>org.opentest4j.AssertionFailedError: expected: &lt;true&gt; but was: &lt;false&gt;
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:31)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:179)
+	at DentClinicAppTestingSuite.createAppointmentAsPatient(DentClinicAppTestingSuite.java:148)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -208,7 +190,7 @@ Session ID: 490886bdd343f596f68c361c3f4b706a
 </thead>
 <tr>
 <td class="failures">createAppointmentAsPatient()</td>
-<td class="failures">34.033s</td>
+<td class="failures">31.078s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -219,18 +201,18 @@ Session ID: 490886bdd343f596f68c361c3f4b706a
 <pre>SLF4J: Failed to load class &quot;org.slf4j.impl.StaticLoggerBinder&quot;.
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-Starting ChromeDriver 108.0.5359.22 (ec46c90f5938574604681b0a7aad76cfb5e99eb7-refs/branch-heads/5359@{#365}) on port 49787
+Starting ChromeDriver 108.0.5359.22 (ec46c90f5938574604681b0a7aad76cfb5e99eb7-refs/branch-heads/5359@{#365}) on port 60955
 Only local connections are allowed.
 Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
 ChromeDriver was started successfully.
-[1674496679.257][WARNING]: This version of ChromeDriver has not been tested with Chrome version 109.
-sty 23, 2023 6:57:59 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+[1674585259.189][WARNING]: This version of ChromeDriver has not been tested with Chrome version 109.
+sty 24, 2023 7:34:19 PM org.openqa.selenium.remote.ProtocolHandshake createSession
 INFO: Detected upstream dialect: W3C
-sty 23, 2023 6:57:59 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+sty 24, 2023 7:34:19 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
 WARNING: Unable to find an exact match for CDP version 109, so returning the closest version found: a no-op implementation
-sty 23, 2023 6:57:59 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+sty 24, 2023 7:34:19 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
 INFO: Unable to find CDP implementation matching 109.
-sty 23, 2023 6:57:59 PM org.openqa.selenium.chromium.ChromiumDriver lambda$new$3
+sty 24, 2023 7:34:19 PM org.openqa.selenium.chromium.ChromiumDriver lambda$new$3
 WARNING: Unable to find version of CDP to use for . You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.4.0` where the version (&quot;v86&quot;) matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
 </pre>
 </span>
@@ -243,7 +225,7 @@ WARNING: Unable to find version of CDP to use for . You may need to include a de
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.1.1</a> at 23 sty 2023, 18:58:31</p>
+<a href="http://www.gradle.org">Gradle 7.1.1</a> at 24 sty 2023, 19:34:48</p>
 </div>
 </div>
 </body>

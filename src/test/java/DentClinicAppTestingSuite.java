@@ -1,8 +1,11 @@
 import com.dent.config.WebDriverConfig;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -70,16 +73,54 @@ public class DentClinicAppTestingSuite {
     }
 
     private void logIn(String identity) {
-        WebElement usernameField = driver.findElement(By.id("input-vaadin-text-field-6"));
-        WebElement passwordField = driver.findElement(By.id("input-vaadin-password-field-7"));
 
         if(identity.equals("Admin")) {
-            usernameField.sendKeys("admin");
-        } else if(identity.equals("User")) {
-            usernameField.sendKeys("user");
-        }
+            try {
+                Robot robot = new Robot();
+                robot.setAutoDelay(250);
+                robot.keyPress(KeyEvent.VK_A);
+                robot.keyPress(KeyEvent.VK_D);
+                robot.keyPress(KeyEvent.VK_M);
+                robot.keyPress(KeyEvent.VK_I);
 
-        passwordField.sendKeys("userpass");
+                robot.keyPress(KeyEvent.VK_TAB);
+
+                robot.keyPress(KeyEvent.VK_U);
+                robot.keyPress(KeyEvent.VK_S);
+                robot.keyPress(KeyEvent.VK_E);
+                robot.keyPress(KeyEvent.VK_R);
+                robot.keyPress(KeyEvent.VK_P);
+                robot.keyPress(KeyEvent.VK_A);
+                robot.keyPress(KeyEvent.VK_S);
+                robot.keyPress(KeyEvent.VK_S);
+
+            } catch (AWTException ex) {
+                ex.printStackTrace();
+            }
+        } else if(identity.equals("User")) {
+            try {
+                Robot robot = new Robot();
+                robot.setAutoDelay(250);
+                robot.keyPress(KeyEvent.VK_U);
+                robot.keyPress(KeyEvent.VK_S);
+                robot.keyPress(KeyEvent.VK_E);
+                robot.keyPress(KeyEvent.VK_R);
+
+                robot.keyPress(KeyEvent.VK_TAB);
+
+                robot.keyPress(KeyEvent.VK_U);
+                robot.keyPress(KeyEvent.VK_S);
+                robot.keyPress(KeyEvent.VK_E);
+                robot.keyPress(KeyEvent.VK_R);
+                robot.keyPress(KeyEvent.VK_P);
+                robot.keyPress(KeyEvent.VK_A);
+                robot.keyPress(KeyEvent.VK_S);
+                robot.keyPress(KeyEvent.VK_S);
+
+            } catch (AWTException ex) {
+                ex.printStackTrace();
+            }
+        }
 
         WebElement logInButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-login-form/vaadin-login-form-wrapper/form/vaadin-button"));
         logInButton.click();
@@ -94,5 +135,14 @@ public class DentClinicAppTestingSuite {
         dentistButton.click();
 
         logIn(USER);
+
+        boolean nameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals("IntegrationTestName"));
+
+        boolean surnameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals("IntegrationTestSurname"));
+
+        Assertions.assertTrue(nameFieldPresence);
+        Assertions.assertTrue(surnameFieldPresence);
     }
 }
