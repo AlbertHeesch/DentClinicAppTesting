@@ -12,13 +12,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 public class DentClinicAppTestingSuite {
-//    private static final String BASE_URL = "http://localhost:8080/home";
     private static final String BASE_URL = "http://localhost:8085/home";
     private static final String ADMIN = "Admin";
     private static final String USER = "User";
     private WebDriver driver;
-
-//    private WebElement adminButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[1]"));
 
     @BeforeEach
     public void initTests() {
@@ -82,6 +79,7 @@ public class DentClinicAppTestingSuite {
                 robot.keyPress(KeyEvent.VK_D);
                 robot.keyPress(KeyEvent.VK_M);
                 robot.keyPress(KeyEvent.VK_I);
+                robot.keyPress(KeyEvent.VK_N);
 
                 robot.keyPress(KeyEvent.VK_TAB);
 
@@ -131,18 +129,30 @@ public class DentClinicAppTestingSuite {
         createAnAppointment();
         Thread.sleep(10000);
 
-        WebElement dentistButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[2]"));
-        dentistButton.click();
+        WebElement adminButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[3]"));
+        adminButton.click();
 
-        logIn(USER);
+        logIn(ADMIN);
 
-        boolean nameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+        boolean nameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
                 .anyMatch(appointment -> appointment.getText().equals("IntegrationTestName"));
 
-        boolean surnameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+        boolean surnameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
                 .anyMatch(appointment -> appointment.getText().equals("IntegrationTestSurname"));
 
-        Assertions.assertTrue(nameFieldPresence);
-        Assertions.assertTrue(surnameFieldPresence);
+        Assertions.assertTrue(nameFieldPresence && surnameFieldPresence);
+
+        //Clean Up
+        driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .filter(element -> element.getText().equals("IntegrationTestName"))
+                .forEach(WebElement::click);
+
+        Thread.sleep(1000);
+
+        driver.manage().window().fullscreen();
+        WebElement deleteButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-form-layout/vaadin-horizontal-layout/vaadin-button[2]"));
+        deleteButton.click();
+
+        driver.close();
     }
 }
