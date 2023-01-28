@@ -6,6 +6,7 @@ import org.openqa.selenium.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -15,6 +16,8 @@ public class DentClinicAppTestingSuite {
     private static final String BASE_URL = "http://localhost:8085/home";
     private static final String ADMIN = "Admin";
     private static final String USER = "User";
+    private final String testName = "IntegrationTestName";
+    private final String testSurname = "IntegrationTestSurname";
     private WebDriver driver;
 
     @BeforeEach
@@ -31,10 +34,10 @@ public class DentClinicAppTestingSuite {
         Thread.sleep(4000);
 
         WebElement nameField = driver.findElement(By.id("input-vaadin-text-field-27"));
-        nameField.sendKeys("IntegrationTestName");
+        nameField.sendKeys(testName);
 
         WebElement surnameField = driver.findElement(By.id("input-vaadin-text-field-28"));
-        surnameField.sendKeys("IntegrationTestSurname");
+        surnameField.sendKeys(testSurname);
 
         WebElement peselField = driver.findElement(By.id("input-vaadin-big-decimal-field-29"));
         peselField.sendKeys("1234");
@@ -45,7 +48,13 @@ public class DentClinicAppTestingSuite {
         WebElement datePicker = driver.findElement(By.id("input-vaadin-date-time-picker-date-picker-31"));
         datePicker.click();
         Thread.sleep(1000);
-        datePicker.sendKeys(DateTimeFormatter.ofPattern("dd.MM.uuuu").format(LocalDate.now().plusDays(1)));
+        if(LocalDate.now().getDayOfWeek() == DayOfWeek.FRIDAY) {
+            datePicker.sendKeys(DateTimeFormatter.ofPattern("dd.MM.uuuu").format(LocalDate.now().plusDays(3)));
+        } else if(LocalDate.now().getDayOfWeek() == DayOfWeek.SATURDAY) {
+            datePicker.sendKeys(DateTimeFormatter.ofPattern("dd.MM.uuuu").format(LocalDate.now().plusDays(3)));
+        } else {
+            datePicker.sendKeys(DateTimeFormatter.ofPattern("dd.MM.uuuu").format(LocalDate.now().plusDays(1)));
+        }
         datePicker.sendKeys(Keys.ENTER);
 
         WebElement timePicker = driver.findElement(By.id("input-vaadin-date-time-picker-time-picker-33"));
@@ -132,19 +141,76 @@ public class DentClinicAppTestingSuite {
         WebElement adminButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[3]"));
         adminButton.click();
 
+        //Check
         logIn(ADMIN);
 
         boolean nameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
-                .anyMatch(appointment -> appointment.getText().equals("IntegrationTestName"));
+                .anyMatch(appointment -> appointment.getText().equals(testName));
 
         boolean surnameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
-                .anyMatch(appointment -> appointment.getText().equals("IntegrationTestSurname"));
+                .anyMatch(appointment -> appointment.getText().equals(testSurname));
 
         Assertions.assertTrue(nameFieldPresence && surnameFieldPresence);
 
         //Clean Up
         driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
                 .filter(element -> element.getText().equals("IntegrationTestName"))
+                .forEach(WebElement::click);
+
+        Thread.sleep(1000);
+
+        driver.manage().window().fullscreen();
+        WebElement deleteButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-form-layout/vaadin-horizontal-layout/vaadin-button[2]"));
+        deleteButton.click();
+
+        driver.close();
+    }
+
+    @Test
+    public void dentistShouldFindCreatedAppointment() throws InterruptedException {
+        createAnAppointment();
+        Thread.sleep(10000);
+
+        WebElement dentistButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[2]"));
+        dentistButton.click();
+
+        //Check
+        logIn(USER);
+
+        boolean nameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals(testName));
+
+        boolean surnameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals(testSurname));
+
+        Assertions.assertTrue(nameFieldPresence && surnameFieldPresence);
+
+        WebElement specificDentistButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[1]/a[2]"));
+        specificDentistButton.click();
+
+        Thread.sleep(1000);
+
+        boolean nameFieldPresenceSpecificDentistPanel = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals(testName));
+
+        boolean surnameFieldPresenceSpecificDentistPanel = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals(testSurname));
+
+        Assertions.assertTrue(nameFieldPresenceSpecificDentistPanel && surnameFieldPresenceSpecificDentistPanel);
+
+        //Clean Up
+        WebElement logOutButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-horizontal-layout/vaadin-button[2]"));
+        logOutButton.click();
+
+        WebElement adminButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[3]"));
+        adminButton.click();
+
+        Thread.sleep(1000);
+
+        logIn(ADMIN);
+
+        driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .filter(element -> element.getText().equals(testName))
                 .forEach(WebElement::click);
 
         Thread.sleep(1000);
