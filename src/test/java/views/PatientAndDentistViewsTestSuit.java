@@ -18,8 +18,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 public class PatientAndDentistViewsTestSuit {
-    private static final String BASE_URL = "http://localhost:8085/home";
-    private static final String ADMIN = "Admin";
+    public static final String BASE_URL = "http://localhost:8085/home";
+    public static final String ADMIN = "Admin";
     private static final String USER = "User";
     private final String testName = "IntegrationTestName";
     private final String testSurname = "IntegrationTestSurname";
@@ -133,9 +133,6 @@ public class PatientAndDentistViewsTestSuit {
                 ex.printStackTrace();
             }
         }
-
-        WebElement logInButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-login-form/vaadin-login-form-wrapper/form/vaadin-button"));
-        logInButton.click();
     }
 
     @Test
@@ -148,6 +145,16 @@ public class PatientAndDentistViewsTestSuit {
 
         //Check
         logIn(ADMIN);
+
+        try {
+            WebElement logInButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-login-form/vaadin-login-form-wrapper/form/vaadin-button"));
+            logInButton.click();
+        }
+        catch(org.openqa.selenium.StaleElementReferenceException ex)
+        {
+            WebElement logInButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-login-form/vaadin-login-form-wrapper/form/vaadin-button"));
+            logInButton.click();
+        }
 
         boolean nameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
                 .anyMatch(appointment -> appointment.getText().equals(testName));
@@ -172,7 +179,7 @@ public class PatientAndDentistViewsTestSuit {
     }
 
     @Test
-    public void shouldFindCreatedAppointment() throws InterruptedException {
+    public void dentistsShouldFindCreatedAppointment() throws InterruptedException {
         createAnAppointment();
         Thread.sleep(10000);
 
@@ -182,13 +189,23 @@ public class PatientAndDentistViewsTestSuit {
         //Check
         logIn(USER);
 
+        WebElement logInButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-login-form/vaadin-login-form-wrapper/form/vaadin-button"));
+
+        logInButton.click();
+
         boolean nameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
-                .anyMatch(appointment -> appointment.getText().equals(testName));
+                .anyMatch(appointment -> appointment.getText().equals("IntegrationTestName"));
 
         boolean surnameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
-                .anyMatch(appointment -> appointment.getText().equals(testSurname));
+                .anyMatch(appointment -> appointment.getText().equals("IntegrationTestSurname"));
 
-        Assertions.assertTrue(nameFieldPresence && surnameFieldPresence);
+        boolean peselFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals("1234"));
+
+        boolean emailFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals("Integration@test.com"));
+
+        Assertions.assertTrue(nameFieldPresence && surnameFieldPresence && peselFieldPresence && emailFieldPresence);
 
         //Clean Up
         WebElement logOutButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-horizontal-layout/vaadin-button[2]"));
@@ -200,6 +217,9 @@ public class PatientAndDentistViewsTestSuit {
         Thread.sleep(1000);
 
         logIn(ADMIN);
+
+        WebElement logInButton1 = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-login-form/vaadin-login-form-wrapper/form/vaadin-button"));
+        logInButton1.click();
 
         driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
                 .filter(element -> element.getText().equals(testName))
@@ -215,7 +235,7 @@ public class PatientAndDentistViewsTestSuit {
     }
 
     @Test
-    public void dentistShouldFindCreatedAppointment() throws InterruptedException {
+    public void specificDentistShouldFindCreatedAppointment() throws InterruptedException {
         createAnAppointment();
         Thread.sleep(10000);
 
@@ -225,18 +245,27 @@ public class PatientAndDentistViewsTestSuit {
         //Check
         logIn(USER);
 
+        WebElement logInButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-login-form/vaadin-login-form-wrapper/form/vaadin-button"));
+        logInButton.click();
+
         WebElement specificDentistButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[1]/a[2]"));
         specificDentistButton.click();
 
         Thread.sleep(1000);
 
-        boolean nameFieldPresenceSpecificDentistPanel = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
-                .anyMatch(appointment -> appointment.getText().equals(testName));
+        boolean nameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals("IntegrationTestName"));
 
-        boolean surnameFieldPresenceSpecificDentistPanel = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
-                .anyMatch(appointment -> appointment.getText().equals(testSurname));
+        boolean surnameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals("IntegrationTestSurname"));
 
-        Assertions.assertTrue(nameFieldPresenceSpecificDentistPanel && surnameFieldPresenceSpecificDentistPanel);
+        boolean peselFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals("1234"));
+
+        boolean emailFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .anyMatch(appointment -> appointment.getText().equals("Integration@test.com"));
+
+        Assertions.assertTrue(nameFieldPresence && surnameFieldPresence && peselFieldPresence && emailFieldPresence);
 
         //Clean Up
         WebElement logOutButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-horizontal-layout/vaadin-button[2]"));
@@ -248,6 +277,10 @@ public class PatientAndDentistViewsTestSuit {
         Thread.sleep(1000);
 
         logIn(ADMIN);
+
+
+        WebElement logInButton1 = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-login-form/vaadin-login-form-wrapper/form/vaadin-button"));
+        logInButton1.click();
 
         driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
                 .filter(element -> element.getText().equals(testName))
