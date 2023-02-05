@@ -32,7 +32,7 @@ public class PatientAndDentistViewsTestSuit {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    public void createAnAppointment() throws InterruptedException {
+    private void createAnAppointment() throws InterruptedException {
         WebElement patientButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[1]"));
         patientButton.click();
 
@@ -81,6 +81,8 @@ public class PatientAndDentistViewsTestSuit {
 
         WebElement bookButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-horizontal-layout/vaadin-form-layout/vaadin-horizontal-layout/vaadin-button[1]"));
         bookButton.click();
+
+        Thread.sleep(10000);
     }
 
     public void logIn(String identity) {
@@ -138,7 +140,6 @@ public class PatientAndDentistViewsTestSuit {
     @Test
     void createAppointmentAsPatient() throws InterruptedException {
         createAnAppointment();
-        Thread.sleep(10000);
 
         WebElement adminButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[3]"));
         adminButton.click();
@@ -181,7 +182,6 @@ public class PatientAndDentistViewsTestSuit {
     @Test
     public void dentistsShouldFindCreatedAppointment() throws InterruptedException {
         createAnAppointment();
-        Thread.sleep(10000);
 
         WebElement dentistButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[2]"));
         dentistButton.click();
@@ -237,7 +237,6 @@ public class PatientAndDentistViewsTestSuit {
     @Test
     public void specificDentistShouldFindCreatedAppointment() throws InterruptedException {
         createAnAppointment();
-        Thread.sleep(10000);
 
         WebElement dentistButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[2]"));
         dentistButton.click();
