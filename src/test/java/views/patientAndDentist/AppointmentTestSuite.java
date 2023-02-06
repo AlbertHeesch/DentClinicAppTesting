@@ -1,4 +1,4 @@
-package views;
+package views.patientAndDentist;
 
 import com.dent.config.WebDriverConfig;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +17,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
-public class PatientAndDentistViewsTestSuit {
+public class AppointmentTestSuite {
     public static final String BASE_URL = "http://localhost:8085/home";
     public static final String ADMIN = "Admin";
     private static final String USER = "User";

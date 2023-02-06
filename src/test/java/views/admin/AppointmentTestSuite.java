@@ -1,4 +1,4 @@
-package views;
+package views.admin;
 
 import com.dent.config.WebDriverConfig;
 import org.junit.jupiter.api.Assertions;
@@ -15,14 +15,14 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
-public class AdminViewTestSuit {
+public class AppointmentTestSuite {
     private WebDriver driver;
-    private final PatientAndDentistViewsTestSuit patientAndDentist = new PatientAndDentistViewsTestSuit();
+    private final views.patientAndDentist.AppointmentTestSuite patientAndDentist = new views.patientAndDentist.AppointmentTestSuite();
 
     @BeforeEach
     public void initTests() throws InterruptedException {
         driver = WebDriverConfig.getDriver(WebDriverConfig.CHROME);
-        driver.get(PatientAndDentistViewsTestSuit.BASE_URL);
+        driver.get(views.patientAndDentist.AppointmentTestSuite.BASE_URL);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         WebElement adminButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-horizontal-layout/vaadin-button[3]"));
@@ -30,14 +30,14 @@ public class AdminViewTestSuit {
 
         Thread.sleep(2000);
 
-        patientAndDentist.logIn(PatientAndDentistViewsTestSuit.ADMIN);
+        patientAndDentist.logIn(views.patientAndDentist.AppointmentTestSuite.ADMIN);
 
         WebElement logInButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-vertical-layout/vaadin-login-form/vaadin-login-form-wrapper/form/vaadin-button"));
         logInButton.click();
 
         Thread.sleep(2000);
 
-        appointmentCreationInAdminView();
+        appointmentCreation();
     }
 
     private void deleteAppointment(String appointmentName) throws InterruptedException {
@@ -52,7 +52,7 @@ public class AdminViewTestSuit {
         deleteButton.click();
     }
 
-    private void appointmentCreationInAdminView() throws InterruptedException {
+    private void appointmentCreation() throws InterruptedException {
         WebElement appointmentCreationButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[1]/vaadin-button"));
         appointmentCreationButton.click();
 
@@ -107,7 +107,7 @@ public class AdminViewTestSuit {
     }
 
     @Test
-    public void createAndDeleteAnAppointmentAsAdmin() throws InterruptedException {
+    public void createAndDeleteAnAppointment() throws InterruptedException {
         //Check
         boolean nameFieldPresence = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
                 .anyMatch(appointment -> appointment.getText().equals("IntegrationTestName"));
@@ -138,7 +138,7 @@ public class AdminViewTestSuit {
 
     @Test
     public void shouldEditAppointment() throws InterruptedException {
-        patientAndDentist.logIn(PatientAndDentistViewsTestSuit.ADMIN);
+        patientAndDentist.logIn(views.patientAndDentist.AppointmentTestSuite.ADMIN);
 
         Thread.sleep(1000);
 
