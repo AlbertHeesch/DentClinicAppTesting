@@ -15,7 +15,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
-public class AppointmentTestSuite {
+public class AppointmentsTestSuite {
     private WebDriver driver;
     private final views.patientAndDentist.AppointmentTestSuite patientAndDentist = new views.patientAndDentist.AppointmentTestSuite();
 
@@ -38,18 +38,6 @@ public class AppointmentTestSuite {
         Thread.sleep(2000);
 
         appointmentCreation();
-    }
-
-    private void deleteAppointment(String appointmentName) throws InterruptedException {
-        driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
-                .filter(element -> element.getText().equals(appointmentName))
-                .forEach(WebElement::click);
-
-        Thread.sleep(1000);
-
-        driver.manage().window().fullscreen();
-        WebElement deleteButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-form-layout/vaadin-horizontal-layout/vaadin-button[2]"));
-        deleteButton.click();
     }
 
     private void appointmentCreation() throws InterruptedException {
@@ -106,6 +94,18 @@ public class AppointmentTestSuite {
         Thread.sleep(4000);
     }
 
+    private void deleteAppointment(String appointmentName) throws InterruptedException {
+        driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+                .filter(element -> element.getText().equals(appointmentName))
+                .forEach(WebElement::click);
+
+        Thread.sleep(1000);
+
+        driver.manage().window().fullscreen();
+        WebElement deleteButton = driver.findElement(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-form-layout/vaadin-horizontal-layout/vaadin-button[2]"));
+        deleteButton.click();
+    }
+
     @Test
     public void createAndDeleteAnAppointment() throws InterruptedException {
         //Check
@@ -128,10 +128,10 @@ public class AppointmentTestSuite {
 
         Thread.sleep(1000);
 
-        boolean nameFieldPresenceAfterDelete = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
+        boolean integrationNamePresenceAfterDelete = driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
                 .anyMatch(appointment -> appointment.getText().equals("IntegrationTestName"));
 
-        Assertions.assertFalse(nameFieldPresenceAfterDelete);
+        Assertions.assertFalse(integrationNamePresenceAfterDelete);
 
         driver.close();
     }
