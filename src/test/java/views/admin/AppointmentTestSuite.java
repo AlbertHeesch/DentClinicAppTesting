@@ -138,10 +138,6 @@ public class AppointmentTestSuite {
 
     @Test
     public void shouldEditAppointment() throws InterruptedException {
-        patientAndDentist.logIn(views.patientAndDentist.AppointmentTestSuite.ADMIN);
-
-        Thread.sleep(1000);
-
         driver.findElements(By.xpath("//*[@id=\"ROOT-2521314\"]/vaadin-app-layout/vaadin-vertical-layout[2]/vaadin-horizontal-layout[2]/vaadin-grid/vaadin-grid-cell-content")).stream()
                 .filter(element -> element.getText().equals("IntegrationTestName"))
                 .forEach(WebElement::click);
