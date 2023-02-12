@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="views.patientAndDentist.AppointmentTestSuite" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-12T11:57:39" hostname="LAPTOP-0R2G994N" time="42.416">
+<testsuite name="views.admin.RatesTestSuite" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-02-12T13:04:46" hostname="LAPTOP-0R2G994N" time="24.906">
   <properties/>
-  <testcase name="specificDentistShouldFindCreatedAppointment()" classname="views.patientAndDentist.AppointmentTestSuite" time="42.416"/>
+  <testcase name="createAndDeleteRate()" classname="views.admin.RatesTestSuite" time="24.906"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-Starting ChromeDriver 108.0.5359.22 (ec46c90f5938574604681b0a7aad76cfb5e99eb7-refs/branch-heads/5359@{#365}) on port 57271
+Starting ChromeDriver 108.0.5359.22 (ec46c90f5938574604681b0a7aad76cfb5e99eb7-refs/branch-heads/5359@{#365}) on port 56118
 Only local connections are allowed.
 Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
 ChromeDriver was started successfully.
-[1676203061.758][WARNING]: This version of ChromeDriver has not been tested with Chrome version 109.
-lut 12, 2023 12:57:41 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+[1676207088.824][WARNING]: This version of ChromeDriver has not been tested with Chrome version 109.
+lut 12, 2023 2:04:48 PM org.openqa.selenium.remote.ProtocolHandshake createSession
 INFO: Detected upstream dialect: W3C
-lut 12, 2023 12:57:41 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+lut 12, 2023 2:04:49 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
 WARNING: Unable to find an exact match for CDP version 109, so returning the closest version found: a no-op implementation
-lut 12, 2023 12:57:41 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+lut 12, 2023 2:04:49 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
 INFO: Unable to find CDP implementation matching 109.
-lut 12, 2023 12:57:41 PM org.openqa.selenium.chromium.ChromiumDriver lambda$new$3
+lut 12, 2023 2:04:49 PM org.openqa.selenium.chromium.ChromiumDriver lambda$new$3
 WARNING: Unable to find version of CDP to use for . You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.4.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
 ]]></system-err>
 </testsuite>
